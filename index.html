@@ -7,8 +7,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-gray-100 font-sans min-h-screen flex justify-center items-center p-4">
+<body class="bg-gray-100 font-sans min-h-screen flex justify-center items-center p-4 relative">
 
+    <!-- Main Payment Card -->
     <div class="bg-white w-full max-w-md rounded-3xl shadow-lg overflow-hidden border border-gray-200">
         
         <div class="bg-white px-4 py-3 flex items-center justify-between border-b border-gray-200">
@@ -95,6 +96,29 @@
         </div>
     </div>
 
+    <!-- Custom Popup Modal (Exactly like image 1000001525.jpg) -->
+    <div id="customModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm hidden flex justify-center items-center p-4 z-50">
+        <div class="bg-white w-full max-w-sm rounded-3xl p-8 flex flex-col items-center text-center shadow-2xl animate-fade-in">
+            
+            <!-- Green Check Circle -->
+            <div class="w-20 h-20 bg-emerald-500 rounded-full flex items-center justify-center shadow-lg shadow-emerald-100 mb-5">
+                <i class="fa-solid fa-check text-white text-3xl"></i>
+            </div>
+            
+            <!-- Heading -->
+            <h3 class="text-gray-900 font-black text-xl mb-2 tracking-wide">Payment Submitted</h3>
+            
+            <!-- Subtext -->
+            <p class="text-gray-500 text-sm font-medium leading-relaxed mb-6">UTR submitted successfully. Thank you!</p>
+            
+            <!-- OK Button -->
+            <button onclick="closeModal()" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-8 py-2 rounded-xl text-sm transition-colors min-w-[80px]">
+                OK
+            </button>
+            
+        </div>
+    </div>
+
     <script>
         // UPI ID Copy function
         function copyVPA() {
@@ -106,13 +130,24 @@
             });
         }
 
-        // UTR Submit function
+        // UTR Submit function (Triggers custom popup)
         function submitUTR() {
+            // Modal show korbe
+            const modal = document.getElementById('customModal');
+            modal.classList.remove('hidden');
+
+            // Button status update
             const btn = document.getElementById('submitBtn');
             btn.innerText = "Submitted";
             btn.disabled = true;
-            btn.classList.add('bg-gray-400');
-            btn.classList.remove('bg-blue-600', 'hover:bg-blue-700');
+            btn.classList.add('bg-gray-400', 'cursor-not-allowed');
+            btn.classList.remove('bg-blue-600', 'hover:bg-blue-700', 'shadow-md');
+        }
+
+        // Popup close function
+        function closeModal() {
+            const modal = document.getElementById('customModal');
+            modal.classList.add('hidden');
         }
 
         // Countdown Timer
